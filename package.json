@@ -1,0 +1,9 @@
+{
+  "name": "catcfgdb",
+  "version": "0.0.1",
+  "dependencies": {
+    "mongoose": "4.3.3",
+    "csvtojson": "0.4.8",
+    "formidable": "1.0.17"
+  }
+}
