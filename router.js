@@ -80,7 +80,19 @@ function route(handle, pathname, response, request)
 
                 break;
             default:
-                console.log("now reading file: " + ext);
+                console.log("your req is not exists: " + ext);
+                var body = '<html>' +
+                    '<head>' +
+                    '<meta http-equiv="Content-Type" ' +
+                    'content="text/html; charset=UTF-8" />' +
+                    '</head>' +
+                    '<body>' +
+                    '<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>'+
+                    '</body>' +
+                    '</html>';
+                response.writeHead(200, {"Content-Type": "text/html"});
+                response.write(body);
+                response.end();
                 break;
         }
     }
