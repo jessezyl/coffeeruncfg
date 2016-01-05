@@ -14,6 +14,8 @@ handle["/carcfg"] = requestHandler.carcfg;
 handle["/carcatcfg"] = requestHandler.carcatcfg;
 handle["/showcasecfg"] = requestHandler.showcasecfg;
 handle["/showcasecatcfg"] = requestHandler.showcasecatcfg;
+handle["/storycfg"] = requestHandler.storycfg;
+handle["/storycatcfg"] = requestHandler.storycatcfg;
 handle["/upload"] = requestHandler.upload;
 handle["/download"] = requestHandler.download;
 

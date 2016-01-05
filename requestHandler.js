@@ -10,7 +10,7 @@ var util = require("util");
 var mongoose = require("mongoose");
 var CatCfg = require("./mgmodel");
 
-var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json"];
+var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json"];
 
 function start(response,request)
 {
@@ -218,7 +218,7 @@ function carcfg(response,request){
 }
 
 function carcatcfg(response,request){
-    console.log("send car json data");
+    console.log("send car cat json data");
 
     request.on("data",function(){
         console.log("got data msg");
@@ -239,7 +239,7 @@ function carcatcfg(response,request){
 }
 
 function showcasecfg(response,request){
-    console.log("send car json data");
+    console.log("send showcase json data");
 
     request.on("data",function(){
         console.log("got data msg");
@@ -260,7 +260,7 @@ function showcasecfg(response,request){
 }
 
 function showcasecatcfg(response,request){
-    console.log("send car json data");
+    console.log("send showcase cat json data");
 
     request.on("data",function(){
         console.log("got data msg");
@@ -279,11 +279,53 @@ function showcasecatcfg(response,request){
 
 }
 
+function storycfg(response,request){
+    console.log("send story json data");
+
+    request.on("data",function(){
+        console.log("got data msg");
+    });
+
+    request.on("end",function(){
+        console.log("got end msg");
+        fs.readFile("story.json", 'utf-8', function (err, data) {//读取内容
+            if (err) throw err;
+            console.log(data);
+            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
+            response.end(data);
+        });
+
+    });
+
+}
+
+function storycatcfg(response,request){
+    console.log("send story cat json data");
+
+    request.on("data",function(){
+        console.log("got data msg");
+    });
+
+    request.on("end",function(){
+        console.log("got end msg");
+        fs.readFile("story_cat.json", 'utf-8', function (err, data) {//读取内容
+            if (err) throw err;
+            console.log(data);
+            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
+            response.end(data);
+        });
+
+    });
+
+}
+
 exports.start = start;
 exports.upload_cfg = upload_cfg;
 exports.carcfg = carcfg;
 exports.carcatcfg = carcatcfg;
 exports.showcasecfg = showcasecfg;
 exports.showcasecatcfg = showcasecatcfg;
+exports.storycfg = storycfg;
+exports.storycatcfg = storycatcfg;
 exports.upload = upload;
 exports.download = download;
