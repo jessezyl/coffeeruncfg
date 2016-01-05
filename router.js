@@ -22,7 +22,7 @@ function route(handle, pathname, response, request) {
             case ".js":
             case ".json":
                 console.log("now reading file: " + ext);
-                fs.readFile("." + request.url, 'utf-8', function (err, data) {//读取内容
+                fs.readFile("." + url.parse(request.url).pathname, 'utf-8', function (err, data) {//读取内容
                     if (err) throw err;
                     response.writeHead(200, {
                         "Content-Type": {
@@ -38,7 +38,7 @@ function route(handle, pathname, response, request) {
             case ".png":
             case ".jpg":
                 console.log("now reading file: " + ext);
-                fs.readFile("." + request.url, "binary", function (err, data) {//读取内容
+                fs.readFile("." + url.parse(request.url).pathname, "binary", function (err, data) {//读取内容
                     if (err) throw err;
                     response.writeHead(200, {
                         "Content-Type": {
@@ -62,7 +62,7 @@ function route(handle, pathname, response, request) {
                 });
                 break;
             case ".csv":
-
+                console.log("about to read:" + url.parse(request.url).pathname);
                 var converter = new Converter({
                     checkType: false
                 });
@@ -80,7 +80,7 @@ function route(handle, pathname, response, request) {
                 break;
             case ".mp3":
                 console.log("now reading file: " + ext);
-                fs.readFile("." + request.url, "binary", function (err, data) {//读取内容
+                fs.readFile("." + url.parse(request.url).pathname, "binary", function (err, data) {//读取内容
                     if (err) throw err;
                     response.writeHead(200, {
                         'Content-Type': 'audio/mpeg'

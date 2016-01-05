@@ -7,8 +7,13 @@ var router = require("./router");
 var requestHandler = require("./requestHandler");
 
 var handle = {};
-handle["/"] = requestHandler.start;
+handle["/"] = requestHandler.upload_cfg;
 handle["/start"] = requestHandler.start;
+handle["/upload_cfg"] = requestHandler.upload_cfg;
+handle["/carcfg"] = requestHandler.carcfg;
+handle["/carcatcfg"] = requestHandler.carcatcfg;
+handle["/showcasecfg"] = requestHandler.showcasecfg;
+handle["/showcasecatcfg"] = requestHandler.showcasecatcfg;
 handle["/upload"] = requestHandler.upload;
 handle["/download"] = requestHandler.download;
 
