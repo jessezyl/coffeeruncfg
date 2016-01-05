@@ -10,12 +10,7 @@ var handle = {};
 handle["/"] = requestHandler.upload_cfg;
 handle["/start"] = requestHandler.start;
 handle["/upload_cfg"] = requestHandler.upload_cfg;
-handle["/carcfg"] = requestHandler.carcfg;
-handle["/carcatcfg"] = requestHandler.carcatcfg;
-handle["/showcasecfg"] = requestHandler.showcasecfg;
-handle["/showcasecatcfg"] = requestHandler.showcasecatcfg;
-handle["/storycfg"] = requestHandler.storycfg;
-handle["/storycatcfg"] = requestHandler.storycatcfg;
+handle["/getcoffeecfg"] = requestHandler.getJson;
 handle["/upload"] = requestHandler.upload;
 handle["/download"] = requestHandler.download;
 

@@ -10,6 +10,9 @@ var util = require("util");
 var mongoose = require("mongoose");
 var CatCfg = require("./mgmodel");
 
+var coffeeRunCfgJson = {};
+
+
 var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json"];
 
 function start(response,request)
@@ -88,6 +91,7 @@ function upload(response, request)
             fs.writeFile(fileNames[0]+".json",JSON.stringify(jsonArray), function (err) {
                 if(err) throw err;
                 console.log("it is saved.");
+                combineJsons(fileNames[0]+".json");
             });
             console.log(jsonArray);
             for(var i in jsonArray){
@@ -176,28 +180,23 @@ function download(response)
 
 }
 
-function combineJsons(){
-    var coffeeRunCfgJson = {};
-    for(var jsonFile in jsonFiles){
-        fs.readFile(jsonFile, 'utf-8', function (err, data) {//读取内容
+function combineJsons(jsonFile) {
+
+    fs.readFile(jsonFile, 'utf-8', function (err, data) {//读取内容
+        if (err) throw err;
+        console.log("now reading file:" + jsonFile);
+        var key = jsonFile.split(".")[0];
+        coffeeRunCfgJson[key] = JSON.parse(data);
+        fs.writeFile("coffeeruncfg.json", JSON.stringify(coffeeRunCfgJson), function (err) {
             if (err) throw err;
-            coffeeRunCfgJson.jsonFile.split(".")[0] = data;
+            console.log("coffeeruncfg is saved.");
         });
-    }
-
-    /*fs.writeFile(fileNames[0]+".json",JSON.stringify(jsonArray), function (err) {
-        if(err) throw err;
-        console.log("it is saved.");
-    });*/
+    });
 
 }
 
-function getJson(){
-    console.log("send json data");
-}
-
-function carcfg(response,request){
-    console.log("send car json data");
+function getJson(response,request){
+    console.log("send coffeeruncfg json data");
 
     request.on("data",function(){
         console.log("got data msg");
@@ -205,70 +204,7 @@ function carcfg(response,request){
 
     request.on("end",function(){
         console.log("got end msg");
-        fs.readFile("car.json", 'utf-8', function (err, data) {//读取内容
-            if (err) throw err;
-            console.log(data);
-            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
-            response.end(data);
-        });
-
-
-    });
-
-}
-
-function carcatcfg(response,request){
-    console.log("send car cat json data");
-
-    request.on("data",function(){
-        console.log("got data msg");
-    });
-
-    request.on("end",function(){
-        console.log("got end msg");
-        fs.readFile("car_cat.json", 'utf-8', function (err, data) {//读取内容
-            if (err) throw err;
-            console.log(data);
-            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
-            response.end(data);
-        });
-
-
-    });
-
-}
-
-function showcasecfg(response,request){
-    console.log("send showcase json data");
-
-    request.on("data",function(){
-        console.log("got data msg");
-    });
-
-    request.on("end",function(){
-        console.log("got end msg");
-        fs.readFile("showcase.json", 'utf-8', function (err, data) {//读取内容
-            if (err) throw err;
-            console.log(data);
-            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
-            response.end(data);
-        });
-
-
-    });
-
-}
-
-function showcasecatcfg(response,request){
-    console.log("send showcase cat json data");
-
-    request.on("data",function(){
-        console.log("got data msg");
-    });
-
-    request.on("end",function(){
-        console.log("got end msg");
-        fs.readFile("showcase_cat.json", 'utf-8', function (err, data) {//读取内容
+        fs.readFile("coffeeruncfg.json", 'utf-8', function (err, data) {//读取内容
             if (err) throw err;
             console.log(data);
             response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
@@ -276,56 +212,10 @@ function showcasecatcfg(response,request){
         });
 
     });
-
-}
-
-function storycfg(response,request){
-    console.log("send story json data");
-
-    request.on("data",function(){
-        console.log("got data msg");
-    });
-
-    request.on("end",function(){
-        console.log("got end msg");
-        fs.readFile("story.json", 'utf-8', function (err, data) {//读取内容
-            if (err) throw err;
-            console.log(data);
-            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
-            response.end(data);
-        });
-
-    });
-
-}
-
-function storycatcfg(response,request){
-    console.log("send story cat json data");
-
-    request.on("data",function(){
-        console.log("got data msg");
-    });
-
-    request.on("end",function(){
-        console.log("got end msg");
-        fs.readFile("story_cat.json", 'utf-8', function (err, data) {//读取内容
-            if (err) throw err;
-            console.log(data);
-            response.writeHead(200,{'Content-Type':'application/x-www-form-urlencoded','Access-Control-Allow-Origin':'*'});
-            response.end(data);
-        });
-
-    });
-
 }
 
 exports.start = start;
 exports.upload_cfg = upload_cfg;
-exports.carcfg = carcfg;
-exports.carcatcfg = carcatcfg;
-exports.showcasecfg = showcasecfg;
-exports.showcasecatcfg = showcasecatcfg;
-exports.storycfg = storycfg;
-exports.storycatcfg = storycatcfg;
+exports.getJson = getJson;
 exports.upload = upload;
 exports.download = download;
