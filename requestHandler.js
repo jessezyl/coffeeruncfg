@@ -13,7 +13,7 @@ var CatCfg = require("./mgmodel");
 var coffeeRunCfgJson = {};
 
 
-var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json"];
+var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json","game_config.json"];
 
 function start(response,request)
 {
