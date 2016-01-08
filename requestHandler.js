@@ -15,6 +15,13 @@ var coffeeRunCfgJson = {};
 
 var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json","game_config.json"];
 
+function init(){
+    for(var i=0;i<jsonFiles.length;i++){
+        combineJsons(jsonFiles[i]);
+
+    }
+}
+
 function start(response,request)
 {
     console.log("Request handler 'start' was called.");
@@ -196,6 +203,8 @@ function combineJsons(jsonFile) {
         fs.writeFile("coffeeruncfg.json", JSON.stringify(coffeeRunCfgJson), function (err) {
             if (err) throw err;
             console.log("coffeeruncfg is saved.");
+            console.log(coffeeRunCfgJson);
+
         });
     });
 
@@ -219,6 +228,8 @@ function getJson(response,request){
 
     });
 }
+
+exports.init = init;
 
 exports.start = start;
 exports.upload_cfg = upload_cfg;

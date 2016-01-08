@@ -14,4 +14,5 @@ handle["/getcoffeecfg"] = requestHandler.getJson;
 handle["/upload"] = requestHandler.upload;
 handle["/download"] = requestHandler.download;
 
+handle["/admin/init"] = requestHandler.init;
 server.start(router.route, handle);
