@@ -24,6 +24,9 @@ function start(response,request)
         'content="text/html; charset=UTF-8" />' +
         '</head>' +
         '<body>' +
+        '<p>注意:<br>上传文件名为：car.csv、car_cat.csv、showcase.csv、showcase_cat.csv、story.csv、story_cat.csv、game_config.csv'+
+            '<br>并且保证csv里面没有空行'+
+        '</p>'+
         '<form action="/upload" enctype="multipart/form-data" ' +
         'method="post">' +
         '<input type="file" name="upload">' +
@@ -54,6 +57,9 @@ function upload_cfg(response,request)
         '<input type="file" name="upload">' +
         '<input type="submit" value="Upload file" />' +
         '</form>' +
+        '<a color="#FF0000">注意:<br>上传文件名为：car.csv、car_cat.csv、showcase.csv、showcase_cat.csv、story.csv、story_cat.csv、game_config.csv'+
+        '<br>并且保证csv里面没有空行'+
+        '</a>'+
         '</body>' +
         '</html>';
 
