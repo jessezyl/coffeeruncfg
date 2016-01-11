@@ -14,6 +14,7 @@ var coffeeRunCfgJson = {};
 
 
 var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json","game_config.json"];
+mongoose.connect('mongodb://localhost/gamedb');
 
 function init(){
     for(var i=0;i<jsonFiles.length;i++){
@@ -46,7 +47,7 @@ function start(response,request)
     response.write(body);
     response.end();
 
-    //mongoose.connect('mongodb://localhost/gamedb');
+
 
 }
 
@@ -109,13 +110,13 @@ function upload(response, request)
             console.log(jsonArray);
             for(var i in jsonArray){
                 console.log("db_data:"+JSON.stringify(jsonArray[i]));
-                /*var catcfg = new CatCfg(jsonArray[i]);
+                var catcfg = new CatCfg(jsonArray[i]);
                 catcfg.save(function(err,cfg){
                     if (err) return console.error(err);
                     CatCfg.find(function(err,cfgs){
                         console.log("cfgs:"+cfgs);
                     })
-                });*/
+                });
             }
         });
 
