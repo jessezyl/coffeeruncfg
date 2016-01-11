@@ -14,7 +14,7 @@ var coffeeRunCfgJson = {};
 
 
 var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json","game_config.json"];
-mongoose.connect('mongodb://localhost/gamedb');
+mongoose.connect('mongodb://112.74.25.31/gamedb');
 
 function init(){
     for(var i=0;i<jsonFiles.length;i++){
