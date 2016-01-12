@@ -8,13 +8,69 @@ var url = require("url");
 var Converter = require("csvtojson").Converter;
 var util = require("util");
 var mongoose = require("mongoose");
-var CatCfg = require("./mgmodel");
+var mgmodel = require("./mgmodel");
 
 var coffeeRunCfgJson = {};
 
 
 var jsonFiles = ["car.json","car_cat.json","showcase.json","showcase_cat.json","story.json","story_cat.json","game_config.json"];
 mongoose.connect('mongodb://112.74.25.31/gamedb');
+
+
+function catSchema(catcfg){
+    this.cat_id = catcfg.cat_id;
+    this.parent_node_id = catcfg.parent_node_id;
+    this.x = catcfg.x;
+    this.y = catcfg.y;
+    this.img = catcfg.img;
+
+}
+
+function showcaseSchema(showcasecfg) {
+    this.sc_id = showcasecfg.sc_id;
+    this.level_id = showcasecfg.level_id;
+    this.img = showcasecfg.img;
+    this.rate = showcasecfg.rate;
+    this.max_cat_num = showcasecfg.max_cat_num;
+    this.min_cat_num = showcasecfg.min_cat_num;
+}
+
+function gamecfgSchema(showcasecfg) {
+    this.num_of_showcase = showcasecfg.num_of_showcase;
+    this.bg_speed = showcasecfg.bg_speed;
+    this.girl_fps = showcasecfg.girl_fps;
+    this.girl_x = showcasecfg.girl_x;
+    this.girl_y = showcasecfg.girl_y;
+    this.refresh_time = showcasecfg.refresh_time;
+    this.car_gen_LTR_min = showcasecfg.car_gen_LTR_min;
+    this.car_gen_LTR_max = showcasecfg.car_gen_LTR_max;
+    this.car_gen_RTL_min = showcasecfg.car_gen_RTL_min;
+    this.car_gen_RTL_max = showcasecfg.car_gen_RTL_max;
+    this.run_game_time = showcasecfg.run_game_time;
+
+}
+
+function storySchema(catcfg) {
+    this.story_id = catcfg.story_id;
+    this.duration = catcfg.duration;
+    this.max_cat_num = catcfg.max_cat_num;
+    this.min_cat_num = catcfg.min_cat_num;
+    this.img = catcfg.img;
+
+}
+
+function carSchema(carcfg) {
+    this.car_id = carcfg.car_id;
+    this.level_id = carcfg.level_id;
+    this.max_speed = carcfg.max_speed;
+    this.min_speed = carcfg.min_speed;
+    this.rate = carcfg.rate;
+    this.max_cat_num = carcfg.max_cat_num;
+    this.min_cat_num = carcfg.min_cat_num;
+    this.img = carcfg.img;
+
+}
+
 
 function init(){
     for(var i=0;i<jsonFiles.length;i++){
@@ -108,16 +164,53 @@ function upload(response, request)
                 combineJsons(fileNames[0]+".json");
             });
             console.log(jsonArray);
+            var currSchema;
+            var currModel;
+            switch(fileNames[0]){
+                case "showcase_cat":
+                    currSchema = catSchema;
+                    currModel = mgmodel.ShowcaseCatCfg;
+                    break;
+                case "showcase":
+                    currSchema = showcaseSchema;
+                    currModel = mgmodel.ShowcaseCfg;
+                    break;
+                case "game_config":
+                    currSchema = gamecfgSchema;
+                    currModel = mgmodel.GameCfg;
+                    break;
+                case "story":
+                    currSchema = storySchema;
+                    currModel = mgmodel.StoryCfg;
+                    break;
+                case "story_cat":
+                    currSchema = catSchema;
+                    currModel = mgmodel.StoryCatCfg;
+                    break;
+                case "car":
+                    currSchema = carSchema;
+                    currModel = mgmodel.CarCfg;
+                    break;
+                case "car_cat":
+                    currSchema = catSchema;
+                    currModel = mgmodel.CarCatCfg;
+                    break;
+                default:
+                    break;
+            }
+
             for(var i in jsonArray){
-                console.log("db_data:"+JSON.stringify(jsonArray[i]));
-                var catcfg = new CatCfg(jsonArray[i]);
-                catcfg.save(function(err,cfg){
+                var catData = new currSchema(jsonArray[i]);
+                console.log("db_data:"+JSON.stringify(catData));
+                var storycatcfg = new currModel(catData);
+                storycatcfg.save(function(err,cfg){
                     if (err) return console.error(err);
-                    CatCfg.find(function(err,cfgs){
+                    currModel.find(function(err,cfgs){
                         console.log("cfgs:"+cfgs);
                     })
                 });
             }
+
         });
 
         fs.createReadStream(__dirname+"/"+files.upload.name).pipe(converter);
