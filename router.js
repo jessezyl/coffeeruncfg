@@ -37,13 +37,15 @@ function route(handle, pathname, response, request) {
                 break;
             case ".png":
             case ".jpg":
+            case ".jpeg":
                 console.log("now reading file: " + ext);
                 fs.readFile("." + url.parse(request.url).pathname, "binary", function (err, data) {//读取内容
                     if (err) throw err;
                     response.writeHead(200, {
                         "Content-Type": {
                             ".png": "image/png",
-                            ".jpg": "image/jpg"
+                            ".jpg": "image/jpg",
+                            ".jpeg": "image/jpeg"
                         }[ext]
                     });
                     response.write(data, "binary");
