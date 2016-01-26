@@ -64,7 +64,20 @@ function route(handle, pathname, response, request) {
                 });
                 break;
             case ".csv":
-                console.log("about to read:" + url.parse(request.url).pathname);
+
+
+                console.log("now reading file: " + ext);
+                fs.readFile("." + url.parse(request.url).pathname, 'utf-8', function (err, data) {//读取内容
+                    if (err) throw err;
+                    response.writeHead(200, {
+                        "Content-Type": "text/csv"
+                    });
+                    response.write(data);
+                    response.end();
+                });
+                break;
+
+                /*console.log("about to read:" + url.parse(request.url).pathname);
                 var converter = new Converter({
                     checkType: false
                 });
@@ -79,7 +92,7 @@ function route(handle, pathname, response, request) {
 
                 fs.createReadStream(__dirname + '/fs_read.csv').pipe(converter);
 
-                break;
+                break;*/
             case ".mp3":
                 console.log("now reading file: " + ext);
                 fs.readFile("." + url.parse(request.url).pathname, "binary", function (err, data) {//读取内容
